@@ -2,6 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { Menu, X } from "lucide-react"; // Hamburger and close icons
 
 type NavItem = {
   href: string;
@@ -12,7 +14,8 @@ type NavItem = {
 };
 
 export default function PublicNavbar() {
-  const pathName = usePathname();
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const navItems: NavItem[] = [
     {
@@ -39,9 +42,9 @@ export default function PublicNavbar() {
   ];
 
   return (
-    <nav className="bg-[#121619] shadow px-5 py-3">
-      <div className="max-w-7xl mx-auto flex justify-between items-center text-white">
-        {/* Logo */}
+    <nav className="bg-[#121619] shadow px-5 py-3 text-white">
+      <div className="max-w-7xl mx-auto flex justify-between items-center">
+        {/* Logo + Site Name */}
         <Link
           href="https://www.kalimporo.com/"
           className="flex items-center gap-2 font-semibold text-lg"
@@ -50,17 +53,16 @@ export default function PublicNavbar() {
             className="dark:invert"
             src="/logo_kalimporo_no_bg.png"
             alt="Logo Kalimporo"
-            width={60}
-            height={60}
+            width={50}
+            height={50}
           />
           <h1>Desa Kalimporo</h1>
         </Link>
 
-        {/* Nav Items */}
-        <div className="flex gap-4">
-          {/* using map and destructuring */}
+        {/* Desktop Menu */}
+        <div className="hidden md:flex gap-4 items-center">
           {navItems.map(({ href, path, label, activeIcon, inactiveIcon }) => {
-            const isActive = pathName === path;
+            const isActive = pathname === path;
             return (
               <Link
                 key={label}
@@ -73,15 +75,13 @@ export default function PublicNavbar() {
                   className="dark:invert"
                   src={isActive ? activeIcon : inactiveIcon}
                   alt={`Logo ${label}`}
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={30}
                 />
                 <span>{label}</span>
               </Link>
             );
           })}
-
-          {/* Admin Login */}
           <Link
             href="/admin/login"
             className="flex items-center gap-3 px-4 py-2 rounded-md bg-[#A29A69] hover:bg-[#918a60] transition font-semibold"
@@ -89,7 +89,50 @@ export default function PublicNavbar() {
             Masuk
           </Link>
         </div>
+
+        {/* Mobile Toggle Button */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden p-2 rounded hover:bg-[#1C2226] transition"
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="mt-3 flex flex-col gap-2 md:hidden">
+          {navItems.map(({ href, path, label, activeIcon, inactiveIcon }) => {
+            const isActive = pathname === path;
+            return (
+              <Link
+                key={label}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                className={`flex items-center gap-3 px-4 py-2 rounded-md transition font-semibold ${
+                  isActive ? "bg-[#262D33]" : "bg-[#121619] hover:bg-[#1C2226]"
+                }`}
+              >
+                <Image
+                  className="dark:invert"
+                  src={isActive ? activeIcon : inactiveIcon}
+                  alt={`Logo ${label}`}
+                  width={30}
+                  height={30}
+                />
+                <span>{label}</span>
+              </Link>
+            );
+          })}
+          <Link
+            href="/admin/login"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center gap-3 px-4 py-2 rounded-md bg-[#A29A69] hover:bg-[#918a60] transition font-semibold"
+          >
+            Masuk
+          </Link>
+        </div>
+      )}
     </nav>
   );
 }
