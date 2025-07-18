@@ -3,11 +3,17 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react"; // Icons for visibility toggle
 import { loginSchema, LoginFormData } from "@/schemas/loginSchema";
 import { login } from "@/lib/firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
-  const [formData, setFormData] = useState<LoginFormData>({ email: "", password: "" });
+  const [formData, setFormData] = useState<LoginFormData>({
+    email: "",
+    password: "",
+  });
   const [formErrors, setFormErrors] = useState<Partial<LoginFormData>>({});
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,21 +36,29 @@ export default function LoginForm() {
 
     // Success — clear errors and submit
     setFormErrors({});
+    setLoading(true);
     console.log("✅ Valid Login:", result.data);
-    // TODO: Submit to server or route
     try {
       const user = await login(result.data.email, result.data.password);
       console.log("User logged in:", user);
+      router.replace("/admin/dashboard"); // Redirect to dashboard on successful login
       // Redirect or perform further actions after successful login
     } catch (error) {
-      setFormErrors({ email: "Login gagal. Cek kembali email dan password, pastikan koneksi internet terhubung." });
+      setFormErrors({
+        email:
+          "Login gagal. Cek kembali email dan password, pastikan koneksi internet terhubung.",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-[#1C2226] p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-white text-center mb-6">Masuk Admin</h2>
+        <h2 className="text-2xl font-bold text-white text-center mb-6">
+          Masuk Admin
+        </h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {/* Email Input */}
           <label className="text-white text-sm font-semibold">
@@ -95,9 +109,14 @@ export default function LoginForm() {
           {/* Submit */}
           <button
             type="submit"
-            className="mt-2 bg-[#A29A69] hover:bg-[#918a60] text-[#121619] font-semibold py-2 rounded-md transition"
+            disabled={loading}
+            className={`mt-2 font-semibold py-2 rounded-md transition ${
+              loading
+                ? "bg-gray-400 text-white cursor-not-allowed"
+                : "bg-[#A29A69] hover:bg-[#918a60] text-[#121619]"
+            }`}
           >
-            Masuk
+            {loading ? "Memproses..." : "Masuk"}
           </button>
         </form>
 
