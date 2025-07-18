@@ -1,15 +1,36 @@
 "use client";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react"; // Icons for visibility toggle
+import { loginSchema, LoginFormData } from "@/schemas/loginSchema";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // ✅ Toggle state
+  const [formData, setFormData] = useState<LoginFormData>({ email: "", password: "" });
+  const [formErrors, setFormErrors] = useState<Partial<LoginFormData>>({});
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Email:", email, "Password:", password);
+    const result = loginSchema.safeParse(formData);
+
+    if (!result.success) {
+      const fieldErrors: Partial<LoginFormData> = {};
+      result.error.issues.forEach((err) => {
+        const fieldName = err.path[0] as keyof LoginFormData;
+        fieldErrors[fieldName] = err.message;
+      });
+      setFormErrors(fieldErrors);
+      return;
+    }
+
+    // Success — clear errors and submit
+    setFormErrors({});
+    console.log("✅ Valid Login:", result.data);
+    // TODO: Submit to server or route
   };
 
   return (
@@ -21,28 +42,34 @@ export default function LoginForm() {
           <label className="text-white text-sm font-semibold">
             Email
             <input
+              name="email"
               type="email"
-              required
-              className="mt-1 w-full px-4 py-2 rounded-md bg-[#121619] text-white border border-[#2f3539] focus:outline-none focus:ring-2 focus:ring-[#A29A69]"
+              className={`mt-1 w-full px-4 py-2 rounded-md bg-[#121619] text-white border ${
+                formErrors.email ? "border-red-500" : "border-[#2f3539]"
+              } focus:outline-none focus:ring-2 focus:ring-[#A29A69]`}
               placeholder="admin@kalimporo.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
             />
+            {formErrors.email && (
+              <p className="text-red-400 text-sm mt-1">{formErrors.email}</p>
+            )}
           </label>
 
-          {/* Password Input with Toggle */}
+          {/* Password Input */}
           <label className="text-white text-sm font-semibold relative">
             Kata Sandi
             <div className="mt-1 relative">
               <input
-                type={showPassword ? "text" : "password"} // ✅ Toggle input type
-                required
-                className="w-full px-4 py-2 rounded-md bg-[#121619] text-white border border-[#2f3539] focus:outline-none focus:ring-2 focus:ring-[#A29A69] pr-10"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                className={`w-full px-4 py-2 rounded-md bg-[#121619] text-white border ${
+                  formErrors.password ? "border-red-500" : "border-[#2f3539]"
+                } focus:outline-none focus:ring-2 focus:ring-[#A29A69] pr-10`}
                 placeholder="********"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formData.password}
+                onChange={handleChange}
               />
-              {/* Toggle button */}
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -52,9 +79,12 @@ export default function LoginForm() {
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
+            {formErrors.password && (
+              <p className="text-red-400 text-sm mt-1">{formErrors.password}</p>
+            )}
           </label>
 
-          {/* Submit Button */}
+          {/* Submit */}
           <button
             type="submit"
             className="mt-2 bg-[#A29A69] hover:bg-[#918a60] text-[#121619] font-semibold py-2 rounded-md transition"
