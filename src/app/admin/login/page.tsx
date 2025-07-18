@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react"; // Icons for visibility toggle
 import { loginSchema, LoginFormData } from "@/schemas/loginSchema";
+import { login } from "@/lib/firebase/auth";
 
 export default function LoginForm() {
   const [formData, setFormData] = useState<LoginFormData>({ email: "", password: "" });
@@ -13,7 +14,7 @@ export default function LoginForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = loginSchema.safeParse(formData);
 
@@ -31,6 +32,13 @@ export default function LoginForm() {
     setFormErrors({});
     console.log("✅ Valid Login:", result.data);
     // TODO: Submit to server or route
+    try {
+      const user = await login(result.data.email, result.data.password);
+      console.log("User logged in:", user);
+      // Redirect or perform further actions after successful login
+    } catch (error) {
+      setFormErrors({ email: "Login gagal. Cek kembali email dan password, pastikan koneksi internet terhubung." });
+    }
   };
 
   return (
