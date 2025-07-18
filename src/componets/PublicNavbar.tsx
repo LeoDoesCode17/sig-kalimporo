@@ -39,6 +39,13 @@ export default function PublicNavbar() {
       activeIcon: "/active_about_nav_item.png",
       inactiveIcon: "/not_active_about_nav_item.png",
     },
+    {
+      href: "/admin/login",
+      path: "/admin/login",
+      label: "Masuk",
+      activeIcon: "/active_login_nav_item.png",
+      inactiveIcon: "/not_active_login_nav_item.png",
+    },
   ];
 
   return (
@@ -71,7 +78,6 @@ export default function PublicNavbar() {
                 }`}
               >
                 <Image
-                  className="dark:invert"
                   src={isActive ? activeIcon : inactiveIcon}
                   alt={`Logo ${label}`}
                   width={30}
@@ -81,12 +87,6 @@ export default function PublicNavbar() {
               </Link>
             );
           })}
-          <Link
-            href="/admin/login"
-            className="flex items-center gap-3 px-4 py-2 rounded-md bg-[#A29A69] hover:bg-[#918a60] transition font-semibold"
-          >
-            Masuk
-          </Link>
         </div>
 
         {/* Mobile Toggle Button */}
@@ -122,13 +122,6 @@ export default function PublicNavbar() {
               </Link>
             );
           })}
-          <Link
-            href="/admin/login"
-            onClick={() => setMenuOpen(false)}
-            className="flex items-center gap-3 px-4 py-2 rounded-md bg-[#A29A69] hover:bg-[#918a60] transition font-semibold"
-          >
-            Masuk
-          </Link>
         </div>
       )}
     </nav>
