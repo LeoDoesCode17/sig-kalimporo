@@ -50,7 +50,6 @@ export default function PublicNavbar() {
           className="flex items-center gap-2 font-semibold text-lg"
         >
           <Image
-            className="dark:invert"
             src="/logo_kalimporo_no_bg.png"
             alt="Logo Kalimporo"
             width={50}
@@ -114,7 +113,6 @@ export default function PublicNavbar() {
                 }`}
               >
                 <Image
-                  className="dark:invert"
                   src={isActive ? activeIcon : inactiveIcon}
                   alt={`Logo ${label}`}
                   width={30}
