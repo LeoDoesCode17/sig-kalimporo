@@ -4,14 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react"; // Hamburger and close icons
-
-type NavItem = {
-  href: string;
-  path: string;
-  label: string;
-  activeIcon: string;
-  inactiveIcon: string;
-};
+import type { NavItem } from "@/types/navItem";
 
 export default function PublicNavbar() {
   const pathname = usePathname();
