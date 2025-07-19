@@ -33,8 +33,8 @@ export default function PublicNavbar() {
       inactiveIcon: "/not_active_about_nav_item.png",
     },
     {
-      href: "/admin/login",
-      path: "/admin/login",
+      href: "/login",
+      path: "/login",
       label: "Masuk",
       activeIcon: "/active_login_nav_item.png",
       inactiveIcon: "/not_active_login_nav_item.png",
