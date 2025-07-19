@@ -4,6 +4,9 @@ import { auth } from "./config";
 export async function login(email: string, password: string) {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const token = await userCredential.user.getIdToken();
+    // Store the token in cookies
+    document.cookie = `__session=${token}; path=/; max-age=3600`; // set valid cookie for 1 hour
     return userCredential.user;
   }catch (error) {
     throw error;
