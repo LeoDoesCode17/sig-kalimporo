@@ -4,19 +4,30 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react"; // Hamburger and close icons
 import type { NavItem } from "@/types/navItem";
+import { logout } from "@/lib/firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function AdminNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
 
-  const navItems: NavItem[] = [
-    {
-      href: "",
-      path: "/admin/login",
-      label: "Logout",
-      activeIcon: "/active_login_nav_item.png",
-      inactiveIcon: "/not_active_login_nav_item.png",
-    },
-  ];
+  const navItem: NavItem = {
+    href: "",
+    path: "/admin/login",
+    label: "Logout",
+    activeIcon: "/active_login_nav_item.png",
+    inactiveIcon: "/not_active_login_nav_item.png",
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      router.push("/admin/dashboard");
+    }
+  };
 
   return (
     <nav className="bg-[#121619] shadow px-5 py-3 text-white">
@@ -37,22 +48,19 @@ export default function AdminNavbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-4 items-center">
-          {navItems.map(({ label, inactiveIcon }) => {
-            return (
-              <button
-                key={label}
-                className={`flex items-center gap-3 px-4 py-2 rounded-md transition font-semibold bg-[#121619] hover:bg-[#1C2226]`}
-              >
-                <Image
-                  src={inactiveIcon}
-                  alt={`Logo ${label}`}
-                  width={30}
-                  height={30}
-                />
-                <span>{label}</span>
-              </button>
-            );
-          })}
+          <button
+            key={navItem.label}
+            className={`flex items-center gap-3 px-4 py-2 rounded-md transition font-semibold bg-[#121619] hover:bg-[#1C2226]`}
+            onClick={handleLogout}
+          >
+            <Image
+              src={navItem.inactiveIcon}
+              alt={`Logo ${navItem.label}`}
+              width={30}
+              height={30}
+            />
+            <span>{navItem.label}</span>
+          </button>
         </div>
 
         {/* Mobile Toggle Button */}
@@ -67,23 +75,19 @@ export default function AdminNavbar() {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="mt-3 flex flex-col gap-2 md:hidden">
-          {navItems.map(({ label, inactiveIcon }) => {
-            return (
-              <button
-                key={label}
-                onClick={() => setMenuOpen(false)}
-                className={`flex items-center gap-3 px-4 py-2 rounded-md transition font-semibold bg-[#121619] hover:bg-[#1C2226]`}
-              >
-                <Image
-                  src={inactiveIcon}
-                  alt={`Logo ${label}`}
-                  width={30}
-                  height={30}
-                />
-                <span>{label}</span>
-              </button>
-            );
-          })}
+          <button
+            key={navItem.label}
+            onClick={handleLogout}
+            className={`flex items-center gap-3 px-4 py-2 rounded-md transition font-semibold bg-[#121619] hover:bg-[#1C2226]`}
+          >
+            <Image
+              src={navItem.inactiveIcon}
+              alt={`Logo ${navItem.label}`}
+              width={30}
+              height={30}
+            />
+            <span>{navItem.label}</span>
+          </button>
         </div>
       )}
     </nav>
