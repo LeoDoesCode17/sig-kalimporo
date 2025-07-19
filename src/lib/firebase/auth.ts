@@ -16,6 +16,7 @@ export async function login(email: string, password: string) {
 export async function logout() {
   try {
     await auth.signOut();
+    document.cookie = '__session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
   } catch (error) {
     throw error;
   }
