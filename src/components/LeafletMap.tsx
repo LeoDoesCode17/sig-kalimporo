@@ -39,6 +39,23 @@ export default function LeafletMap({ people_locations }: LeafletMapProps) {
       <Marker position={location}>
         <Popup>Center is here!</Popup>
       </Marker>
+      {people_locations.map((person) => {
+        return (
+          <div key={person.id}>
+            <Marker position={[person.location.latitude, person.location.longitude]}>
+              <Popup>
+                {/* must create badge */}
+                <div className="text-center">
+                  <h2 className="font-semibold">{person.name}</h2>
+                  <p>Contact: {person.contact_number}</p>
+                  <p>Work as: {person.work_as.id}</p>
+                  <p>Hamlet: {person.hamlet.id}</p>
+                </div>
+              </Popup>
+            </Marker>
+          </div>
+        );
+      })}
     </MapContainer>
   );
 }
