@@ -25,7 +25,7 @@ export default function LeafletMap({ people_locations }: LeafletMapProps) {
   return (
     <MapContainer
       center={location}
-      zoom={15}
+      zoom={13}
       style={{ 
         height: "500px", 
         width: "100%", 
