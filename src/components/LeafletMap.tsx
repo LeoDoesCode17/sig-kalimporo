@@ -47,9 +47,9 @@ export default function LeafletMap({ people_locations }: LeafletMapProps) {
                 {/* must create badge */}
                 <div className="text-center">
                   <h2 className="font-semibold">{person.name}</h2>
-                  <p>Contact: {person.contact_number}</p>
-                  <p>Work as: {person.work_as.id}</p>
-                  <p>Hamlet: {person.hamlet.id}</p>
+                  <p>No. HP          : {person.contact_number}</p>
+                  <p>Bekerja sebagai : {person.work_as.id}</p>
+                  <p>Dusun           : {person.hamlet.id}</p>
                 </div>
               </Popup>
             </Marker>
