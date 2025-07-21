@@ -48,8 +48,8 @@ export default function LeafletMap({ people_locations }: LeafletMapProps) {
                 <div className="text-center">
                   <h2 className="font-semibold">{person.name}</h2>
                   <p>No. HP          : {person.contact_number}</p>
-                  <p>Bekerja sebagai : {person.work_as.id}</p>
-                  <p>Dusun           : {person.hamlet.id}</p>
+                  <p>Bekerja sebagai : {person.work_as}</p>
+                  <p>Dusun           : {person.hamlet}</p>
                 </div>
               </Popup>
             </Marker>
