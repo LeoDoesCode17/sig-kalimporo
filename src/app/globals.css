@@ -24,3 +24,14 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.leaflet-popup-content-wrapper {
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.leaflet-popup-content {
+  margin: 0;
+}
+.leaflet-popup-tip {
+  background: white;
+}
