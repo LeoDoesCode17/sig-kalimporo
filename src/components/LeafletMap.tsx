@@ -9,6 +9,7 @@ import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { LeafletMapProps } from "@/types/LeafletMapProps";
+import Badge from "./Badge";
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
@@ -26,9 +27,9 @@ export default function LeafletMap({ people_locations }: LeafletMapProps) {
     <MapContainer
       center={location}
       zoom={13}
-      style={{ 
-        height: "500px", 
-        width: "100%", 
+      style={{
+        height: "500px",
+        width: "100%",
         borderRadius: "0.5rem",
       }}
     >
@@ -42,14 +43,39 @@ export default function LeafletMap({ people_locations }: LeafletMapProps) {
       {people_locations.map((person) => {
         return (
           <div key={person.id}>
-            <Marker position={[person.location.latitude, person.location.longitude]}>
-              <Popup>
-                {/* must create badge */}
-                <div className="text-center">
-                  <h2 className="font-semibold">{person.name}</h2>
-                  <p>No. HP          : {person.contact_number}</p>
-                  <p>Bekerja sebagai : {person.work_as}</p>
-                  <p>Dusun           : {person.hamlet}</p>
+            <Marker
+              position={[person.location.latitude, person.location.longitude]}
+            >
+              <Popup className="custom-popup">
+                <div className="w-60 p-3 space-y-2 text-sm text-gray-800">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-base font-semibold text-gray-900">
+                      {person.name}
+                    </h3>
+                    <Badge label={person.work_as} />
+                  </div>
+
+                  <div className="flex flex-col gap-1 text-xs">
+                    <div className="flex justify-between">
+                      <span className="font-medium text-gray-600">No. HP</span>
+                      <span className="text-gray-900">
+                        {person.contact_number}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <span className="font-medium text-gray-600">Dusun</span>
+                      <span className="text-gray-900">{person.hamlet}</span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      className="text-blue-600 hover:underline text-xs font-medium"
+                    >
+                      Lihat detail
+                    </button>
+                  </div>
                 </div>
               </Popup>
             </Marker>
