@@ -1,9 +1,11 @@
 import {
   collection,
+  doc,
   DocumentReference,
   getDoc,
   getDocs,
   query,
+  updateDoc,
   where
 } from "firebase/firestore";
 import { firestore } from "../config";
@@ -57,4 +59,8 @@ export const PeopleLocationService = {
       name: hamletSnapshot.data().name,
     };
   },
+  async softDelete(id: string): Promise<void> {
+    const personRef = doc(firestore, "people_locations", id);
+    await updateDoc(personRef, { soft_deleted: true });
+  }
 };
