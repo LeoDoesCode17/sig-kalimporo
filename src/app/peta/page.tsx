@@ -18,7 +18,7 @@ export default function Home() {
     }, []);
 
   return (
-    <div className="p-5">
+    <div className="p-5 bg-white text-black">
       <h1 className="text-xl mb-4 font-semibold text-center">Persebaran Peternak dan Petani Desa Kalimporo</h1>
       <LeafletMap people_locations={people}/>
     </div>
