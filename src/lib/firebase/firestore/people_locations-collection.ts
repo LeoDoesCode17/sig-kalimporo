@@ -3,6 +3,8 @@ import {
   DocumentReference,
   getDoc,
   getDocs,
+  query,
+  where
 } from "firebase/firestore";
 import { firestore } from "../config";
 import { PeopleLocation } from "@/types/PeopleLocation";
@@ -13,7 +15,8 @@ const peopleRef = collection(firestore, "people_locations");
 
 export const PeopleLocationService = {
   async getAll(): Promise<PeopleLocation[]> {
-    const querySnapshot = await getDocs(peopleRef);
+    const q = query(peopleRef, where("soft_deleted", "==", false));
+    const querySnapshot = await getDocs(q);
 
     const peoplePromises = querySnapshot.docs.map(async (doc) => {
       const data = doc.data();
