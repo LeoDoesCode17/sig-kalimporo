@@ -7,4 +7,5 @@ export interface PeopleLocation {
   location: GeoPoint;
   work_as: string;
   hamlet: string;
+  soft_deleted: boolean;
 }

@@ -29,6 +29,7 @@ export const PeopleLocationService = {
         location: data.location,
         work_as: occupation?.name ?? "Tidak diketahui",
         hamlet: hamlet?.name ?? "Tidak diketahui",
+        soft_deleted: data.soft_deleted ?? false,
       };
     });
     return Promise.all(peoplePromises);
