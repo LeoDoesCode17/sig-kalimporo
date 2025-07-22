@@ -1,18 +1,11 @@
-import { PeopleLocationService } from "@/lib/firebase/firestore/people_locations-collection";
 import { LeafletMapProps } from "@/types/LeafletMapProps";
+import { useState } from "react";
+import DeletePeopleLocationModal from "./DeletePeopleLocationModal";
 
 export default function PeopleLocationTable({
   people_locations,
 }: LeafletMapProps) {
-  const handleDelete = async (id: string) => {
-    console.log(`Delete person with ID: ${id}`);
-    try {
-      await PeopleLocationService.softDelete(id);
-      console.log(`Person with ID: ${id} deleted successfully`);
-    } catch (error) {
-      console.error(`Error deleting person with ID: ${id}`, error);
-    }
-  }
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
       <table className="min-w-full table-fixed border border-gray-300 text-sm">
@@ -50,17 +43,25 @@ export default function PeopleLocationTable({
               <td className="border-r border-gray-300 px-4 py-2 text-black">
                 {person.work_as}
               </td>
-              <td className="border-r border-gray-300 px-4 py-2 text-black">{person.hamlet}</td>
+              <td className="border-r border-gray-300 px-4 py-2 text-black">
+                {person.hamlet}
+              </td>
               <td className="px-4 py-2 text-black">
                 <button className="text-blue-600 hover:underline cursor-pointer">
                   Edit
                 </button>
                 <span className="mx-2">|</span>
-                <button 
-                className="text-red-600 hover:underline cursor-pointer"
-                onClick={() => handleDelete(person.id)}>
+                <button
+                  className="text-red-600 hover:underline cursor-pointer"
+                  onClick={() => setShowDeleteModal(true)}
+                >
                   Hapus
                 </button>
+                <DeletePeopleLocationModal
+                  open={showDeleteModal}
+                  person={person}
+                  onClose={() => setShowDeleteModal(false)}
+                />
               </td>
             </tr>
           ))}
