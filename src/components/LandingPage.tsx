@@ -3,7 +3,7 @@ import React from "react";
 
 export default function LandingPage() {
   return (
-    <section className="bg-white text-black px-6 py-12 md:py-20">
+    <section className="bg-white text-black px-6 py-12 md:py-20 pt-25">
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Main Title */}
         <header className="text-center space-y-4">

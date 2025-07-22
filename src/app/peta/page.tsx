@@ -1,5 +1,5 @@
 // app/page.tsx or pages/index.tsx
-"use client"
+"use client";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { PeopleLocation } from "@/types/PeopleLocation";
@@ -11,16 +11,25 @@ const LeafletMap = dynamic(() => import("@/components/LeafletMap"), {
 });
 
 export default function Home() {
-    const [people, setPeople] = useState<PeopleLocation[]>([]);
-  
-    useEffect(() => {
-      PeopleLocationService.getAll().then(setPeople);
-    }, []);
+  const [people, setPeople] = useState<PeopleLocation[]>([]);
+
+  useEffect(() => {
+    PeopleLocationService.getAll().then(setPeople);
+  }, []);
 
   return (
-    <div className="p-5 bg-white text-black">
-      <h1 className="text-xl mb-4 font-semibold text-center">Persebaran Peternak dan Petani Desa Kalimporo</h1>
-      <LeafletMap people_locations={people}/>
+    <div className="p-5 bg-white text-black pt-25 px-6">
+      <header className="text-center space-y-4 mb-5">
+        <h1 className="text-3xl md:text-4xl font-bold text-[#A29A69]">
+          Peta Potensi Desa Kalimporo
+        </h1>
+        <h2 className="text-lg md:text-xl text-black">
+          Peta Interaktif Pertanian dan Peternakan Desa Kalimporo
+        </h2>
+      </header>
+      <div className="relative z-0 h-[80vh]">
+        <LeafletMap people_locations={people} />
+      </div>
     </div>
   );
 }
