@@ -42,7 +42,7 @@ export default function PublicNavbar() {
   ];
 
   return (
-    <nav className="bg-[#121619] shadow px-5 py-3 text-white">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-[#121619] shadow px-5 py-3 text-white">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo + Site Name */}
         <Link
