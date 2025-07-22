@@ -4,6 +4,7 @@ import { PeopleLocation } from "@/types/PeopleLocation";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import PeopleLocationTable from "@/components/PeopleLocationTable";
+import CreatePeopleLocationModal from "@/components/CreatePeopleLocationModal";
 
 const LeafletMap = dynamic(() => import("@/components/LeafletMap"), {
   ssr: false,
@@ -11,7 +12,7 @@ const LeafletMap = dynamic(() => import("@/components/LeafletMap"), {
 
 export default function Home() {
   const [people, setPeople] = useState<PeopleLocation[]>([]);
-
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     PeopleLocationService.getAll().then(setPeople);
   }, []);
@@ -35,12 +36,14 @@ export default function Home() {
             Data Tabel
           </h1>
           <button
+            onClick={() => setShowModal(true)}
             className="bg-[#A29A69] hover:bg-[#8a835c] text-white font-semibold py-2 px-4 rounded"
           >
             + Tambah Data
           </button>
         </div>
         <PeopleLocationTable people_locations={people} />
+        <CreatePeopleLocationModal open={showModal} onClose={() => setShowModal(false)} />
       </div>
     </div>
   );
