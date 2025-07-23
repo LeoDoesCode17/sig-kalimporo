@@ -2,7 +2,7 @@ import { useState } from "react";
 import { PeopleLocationService } from "@/lib/firebase/firestore/people_locations-collection";
 import { DeletePeopleModalProps } from "@/types/DeletePeopleModalProps";
 
-export default function DeletePeopleLocationModal({ open, person, onClose }: DeletePeopleModalProps) {
+export default function DeletePeopleLocationModal({ open, person, onClose, onDeleteSuccess }: DeletePeopleModalProps) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
@@ -10,6 +10,9 @@ export default function DeletePeopleLocationModal({ open, person, onClose }: Del
       setIsDeleting(true);
       console.log(`Deleting location with ID: ${person.id}`);
       await PeopleLocationService.softDelete(person.id); // ensure this is awaited
+      if (onDeleteSuccess) {
+        onDeleteSuccess(); // Call the success handler if provided
+      }
       onClose();
     } catch (error) {
       console.error("Error deleting location:", error);
