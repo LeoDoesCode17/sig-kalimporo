@@ -83,7 +83,29 @@ export const PeopleLocationService = {
       work_as: occupationRef,
       hamlet: hamletRef,
       location,
-      soft_deleted: false
+      soft_deleted: false,
+    });
+  },
+  async update(
+    id: string,
+    name: string,
+    contact_number: string,
+    occupation_id: string,
+    hamlet_id: string,
+    longitude: number,
+    latitude: number
+  ): Promise<void> {
+    const personRef = doc(firestore, "people_locations", id);
+    const occupationRef = doc(firestore, "occupations", occupation_id);
+    const hamletRef = doc(firestore, "hamlets", hamlet_id);
+    const location = new GeoPoint(latitude, longitude);
+
+    await updateDoc(personRef, {
+      name,
+      contact_number,
+      work_as: occupationRef,
+      hamlet: hamletRef,
+      location,
     });
   },
 };
