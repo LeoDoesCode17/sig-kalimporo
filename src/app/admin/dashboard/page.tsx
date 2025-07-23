@@ -17,6 +17,11 @@ export default function Home() {
     PeopleLocationService.getAll().then(setPeople);
   }, []);
 
+  const refreshData = async () => {
+    console.log("Delete successful, refreshing data...");
+    PeopleLocationService.getAll().then(setPeople)
+  }
+
   return (
     <div className="p-5 bg-white text-black pt-15 px-6">
       <header className="text-center space-y-4 mb-5">
@@ -42,7 +47,7 @@ export default function Home() {
             + Tambah Data
           </button>
         </div>
-        <PeopleLocationTable people_locations={people} />
+        <PeopleLocationTable people_locations={people} onDeleteSuccess={refreshData} />
         <CreatePeopleLocationModal open={showModal} onClose={() => setShowModal(false)} />
       </div>
     </div>
