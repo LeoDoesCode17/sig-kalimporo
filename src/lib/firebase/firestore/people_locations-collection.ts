@@ -1,12 +1,14 @@
 import {
+  addDoc,
   collection,
   doc,
   DocumentReference,
+  GeoPoint,
   getDoc,
   getDocs,
   query,
   updateDoc,
-  where
+  where,
 } from "firebase/firestore";
 import { firestore } from "../config";
 import { PeopleLocation } from "@/types/PeopleLocation";
@@ -62,5 +64,26 @@ export const PeopleLocationService = {
   async softDelete(id: string): Promise<void> {
     const personRef = doc(firestore, "people_locations", id);
     await updateDoc(personRef, { soft_deleted: true });
-  }
+  },
+  async create(
+    name: string,
+    contact_number: string,
+    occupation_id: string,
+    hamlet_id: string,
+    longitude: number,
+    latitude: number
+  ): Promise<void> {
+    const occupationRef = doc(firestore, "occupations", occupation_id);
+    const hamletRef = doc(firestore, "hamlets", hamlet_id);
+    const location = new GeoPoint(latitude, longitude);
+
+    await addDoc(peopleRef, {
+      name,
+      contact_number,
+      work_as: occupationRef,
+      hamlet: hamletRef,
+      location,
+      soft_deleted: false
+    });
+  },
 };
