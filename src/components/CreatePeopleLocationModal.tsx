@@ -1,32 +1,66 @@
+'use client';
+import { useEffect, useState } from "react";
+import { HamletService } from "@/lib/firebase/firestore/hamlets-collection";
+import { OccupationService } from "@/lib/firebase/firestore/occupations-collection";
+import { PeopleLocationService } from "@/lib/firebase/firestore/people_locations-collection";
 import { CreatePeopleModalProps } from "@/types/CreatePeopleModalProps";
-import { useState } from "react";
+import { Hamlet } from "@/types/Hamlet";
+import { Occupation } from "@/types/Occupation";
 
 export default function CreatePeopleLocationModal({
   open,
   onClose,
+  onCreateSuccess
 }: CreatePeopleModalProps) {
   const [form, setForm] = useState({
     name: "",
     contact_number: "",
     work_as: "",
     hamlet: "",
+    longitude: 0.0,
+    latitude: 0.0
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [hamlets, setHamlets] = useState<Hamlet[]>([]);
+  const [occupations, setOccupations] = useState<Occupation[]>([]);
+  const [loading, setLoading] = useState(false); // 👈 loading state
+
+  useEffect(() => {
+    HamletService.getAll().then(setHamlets);
+    OccupationService.getAll().then(setOccupations);
+  }, []);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(form);
-    // TODO: submit data to Firebase here
-    onClose();
+    setLoading(true); // 👈 start loading
+    try {
+      await PeopleLocationService.create(
+        form.name,
+        form.contact_number,
+        form.work_as,
+        form.hamlet,
+        form.longitude,
+        form.latitude
+      );
+      if (onCreateSuccess) onCreateSuccess();
+      onClose();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setLoading(false); // 👈 stop loading
+    }
   };
 
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
       <div className="bg-white text-black rounded-lg w-full max-w-md p-6 border border-gray-300 shadow-lg">
         <h2 className="text-xl font-bold mb-4 text-[#A29A69]">Tambah Data</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -46,19 +80,56 @@ export default function CreatePeopleLocationModal({
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
-          <input
+
+          <select
             name="work_as"
             value={form.work_as}
             onChange={handleChange}
-            placeholder="Pekerjaan"
+            className="w-full border border-gray-300 rounded px-3 py-2"
+            required
+          >
+            <option value="" disabled>
+              Pilih Pekerjaan
+            </option>
+            {occupations.map((occupation) => (
+              <option key={occupation.id} value={occupation.id}>
+                {occupation.name}
+              </option>
+            ))}
+          </select>
+
+          <select
+            name="hamlet"
+            value={form.hamlet}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded px-3 py-2"
+            required
+          >
+            <option value="" disabled>
+              Pilih Dusun
+            </option>
+            {hamlets.map((hamlet) => (
+              <option key={hamlet.id} value={hamlet.id}>
+                {hamlet.name}
+              </option>
+            ))}
+          </select>
+
+          <input
+            name="longitude"
+            type="number"
+            value={form.longitude}
+            onChange={handleChange}
+            placeholder="Longitude"
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
           <input
-            name="hamlet"
-            value={form.hamlet}
+            name="latitude"
+            type="number"
+            value={form.latitude}
             onChange={handleChange}
-            placeholder="Dusun"
+            placeholder="Latitude"
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
@@ -68,14 +139,20 @@ export default function CreatePeopleLocationModal({
               type="button"
               onClick={onClose}
               className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+              disabled={loading}
             >
               Batal
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-[#A29A69] text-white rounded hover:bg-[#8a835c]"
+              disabled={loading}
+              className={`px-4 py-2 rounded text-white ${
+                loading
+                  ? "bg-[#A29A69]/50 cursor-not-allowed"
+                  : "bg-[#A29A69] hover:bg-[#8a835c]"
+              }`}
             >
-              Simpan
+              {loading ? "Menyimpan..." : "Simpan"}
             </button>
           </div>
         </form>
