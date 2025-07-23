@@ -18,7 +18,7 @@ export default function Home() {
   }, []);
 
   const refreshData = async () => {
-    console.log("Delete successful, refreshing data...");
+    console.log("Changes successful, refreshing data...");
     PeopleLocationService.getAll().then(setPeople)
   }
 
