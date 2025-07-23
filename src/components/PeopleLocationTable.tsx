@@ -4,6 +4,7 @@ import DeletePeopleLocationModal from "./DeletePeopleLocationModal";
 
 export default function PeopleLocationTable({
   people_locations,
+  onDeleteSuccess
 }: LeafletMapProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   return (
@@ -61,6 +62,7 @@ export default function PeopleLocationTable({
                   open={showDeleteModal}
                   person={person}
                   onClose={() => setShowDeleteModal(false)}
+                  onDeleteSuccess={onDeleteSuccess}
                 />
               </td>
             </tr>
