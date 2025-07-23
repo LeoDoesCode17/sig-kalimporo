@@ -4,4 +4,5 @@ export interface DeletePeopleModalProps {
   open: boolean;
   person: PeopleLocation;
   onClose: () => void;
+  onDeleteSuccess?: () => Promise<void>;
 }
