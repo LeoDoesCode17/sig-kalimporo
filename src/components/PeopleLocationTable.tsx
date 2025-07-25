@@ -2,22 +2,31 @@ import { LeafletMapProps } from "@/types/LeafletMapProps";
 import { useState } from "react";
 import DeletePeopleLocationModal from "./DeletePeopleLocationModal";
 import { PeopleLocation } from "@/types/PeopleLocation";
+import UpdatePeopleLocationModal from "./UpdatePeopleLocationModal";
 
 export default function PeopleLocationTable({
   people_locations,
   onDeleteSuccess,
+  onUpdateSuccess,
 }: LeafletMapProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   const [selectedPerson, setSelectedPerson] = useState<PeopleLocation>(
     people_locations[0]
   );
 
   const handleShowDeleteModal = (person: PeopleLocation) => {
+    console.log("Selected person for deletion: ", person);
     setSelectedPerson(person);
     setShowDeleteModal(true);
   };
 
+  const handleShowUpdateModal = (person: PeopleLocation) => {
+    console.log("Selected person for update: ", person);
+    setSelectedPerson(person);
+    setShowUpdateModal(true);
+  };
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
       <table className="min-w-full table-fixed border border-gray-300 text-sm">
@@ -59,7 +68,10 @@ export default function PeopleLocationTable({
                 {person.hamlet}
               </td>
               <td className="px-4 py-2 text-black">
-                <button className="text-blue-600 hover:underline cursor-pointer">
+                <button
+                  className="text-blue-600 hover:underline cursor-pointer"
+                  onClick={() => handleShowUpdateModal(person)}
+                >
                   Edit
                 </button>
                 <span className="mx-2">|</span>
@@ -79,6 +91,12 @@ export default function PeopleLocationTable({
         person={selectedPerson}
         onClose={() => setShowDeleteModal(false)}
         onDeleteSuccess={onDeleteSuccess}
+      />
+      <UpdatePeopleLocationModal 
+        open={showUpdateModal}
+        person={selectedPerson}
+        onClose={() => setShowUpdateModal(false)}
+        onUpdateSuccess={onUpdateSuccess}
       />
     </div>
   );
