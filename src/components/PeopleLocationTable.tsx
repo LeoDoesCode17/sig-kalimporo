@@ -1,12 +1,23 @@
 import { LeafletMapProps } from "@/types/LeafletMapProps";
 import { useState } from "react";
 import DeletePeopleLocationModal from "./DeletePeopleLocationModal";
+import { PeopleLocation } from "@/types/PeopleLocation";
 
 export default function PeopleLocationTable({
   people_locations,
-  onDeleteSuccess
+  onDeleteSuccess,
 }: LeafletMapProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const [selectedPerson, setSelectedPerson] = useState<PeopleLocation>(
+    people_locations[0]
+  );
+
+  const handleShowDeleteModal = (person: PeopleLocation) => {
+    setSelectedPerson(person);
+    setShowDeleteModal(true);
+  };
+
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
       <table className="min-w-full table-fixed border border-gray-300 text-sm">
@@ -54,21 +65,21 @@ export default function PeopleLocationTable({
                 <span className="mx-2">|</span>
                 <button
                   className="text-red-600 hover:underline cursor-pointer"
-                  onClick={() => setShowDeleteModal(true)}
+                  onClick={() => handleShowDeleteModal(person)}
                 >
                   Hapus
                 </button>
-                <DeletePeopleLocationModal
-                  open={showDeleteModal}
-                  person={person}
-                  onClose={() => setShowDeleteModal(false)}
-                  onDeleteSuccess={onDeleteSuccess}
-                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <DeletePeopleLocationModal
+        open={showDeleteModal}
+        person={selectedPerson}
+        onClose={() => setShowDeleteModal(false)}
+        onDeleteSuccess={onDeleteSuccess}
+      />
     </div>
   );
 }
