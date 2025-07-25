@@ -47,7 +47,7 @@ export default function Home() {
             + Tambah Data
           </button>
         </div>
-        <PeopleLocationTable people_locations={people} onDeleteSuccess={refreshData} />
+        <PeopleLocationTable people_locations={people} onDeleteSuccess={refreshData} onUpdateSuccess={refreshData} />
         <CreatePeopleLocationModal open={showModal} onClose={() => setShowModal(false)} onCreateSuccess={refreshData} />
       </div>
     </div>
