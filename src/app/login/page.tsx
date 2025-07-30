@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react"; // Icons for visibility toggle
+import { Eye, EyeOff } from "lucide-react";
 import { loginSchema, LoginFormData } from "@/schemas/loginSchema";
 import { login } from "@/lib/firebase/auth";
 import { useRouter } from "next/navigation";
@@ -34,15 +34,12 @@ export default function LoginForm() {
       return;
     }
 
-    // Success — clear errors and submit
     setFormErrors({});
     setLoading(true);
-    console.log("✅ Valid Login:", result.data);
     try {
       const user = await login(result.data.email, result.data.password);
       console.log("User logged in:", user);
-      router.replace("/admin/dashboard"); // Redirect to dashboard on successful login
-      // Redirect or perform further actions after successful login
+      router.replace("/admin/dashboard");
     } catch (error) {
       setFormErrors({
         email:
@@ -54,13 +51,22 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-[#1C2226] p-8 rounded-lg shadow-lg">
+    <div className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
+      {/* Background image */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-20"
+        style={{
+          backgroundImage: "url('/hero-img.jpg')", // Replace with your image path
+        }}
+      />
+
+      {/* Login form */}
+      <div className="relative z-10 w-full max-w-md bg-black/70 backdrop-blur-md p-8 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-white text-center mb-6">
           Masuk Admin
         </h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* Email Input */}
+          {/* Email */}
           <label className="text-white text-sm font-semibold">
             Email
             <input
@@ -78,7 +84,7 @@ export default function LoginForm() {
             )}
           </label>
 
-          {/* Password Input */}
+          {/* Password */}
           <label className="text-white text-sm font-semibold relative">
             Kata Sandi
             <div className="mt-1 relative">
@@ -106,7 +112,7 @@ export default function LoginForm() {
             )}
           </label>
 
-          {/* Submit */}
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
@@ -127,3 +133,4 @@ export default function LoginForm() {
     </div>
   );
 }
+  
