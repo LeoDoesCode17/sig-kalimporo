@@ -18,17 +18,29 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="p-5 bg-white text-black pt-25 px-6">
-      <header className="text-center space-y-4 mb-5">
-        <h1 className="text-3xl md:text-4xl font-bold text-[#A29A69]">
-          Peta Potensi Desa Kalimporo
-        </h1>
-        <h2 className="text-lg md:text-xl text-black">
-          Peta Interaktif Pertanian dan Peternakan Desa Kalimporo
-        </h2>
-      </header>
-      <div className="relative z-0 h-[80vh]">
-        <LeafletMap people_locations={people} />
+    <div className="relative overflow-hidden min-h-screen">
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-20"
+        style={{
+          backgroundImage: "url('/hero-img.jpg')", // Replace with your image path
+        }}
+      />
+
+      {/* Foreground Content */}
+      <div className="relative z-10 p-5 pt-25 px-6 text-black">
+        <header className="text-center space-y-4 mb-5">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#A29A69]">
+            Peta Potensi Desa Kalimporo
+          </h1>
+          <h2 className="text-lg md:text-xl text-black">
+            Peta Interaktif Pertanian dan Peternakan Desa Kalimporo
+          </h2>
+        </header>
+
+        <div className="relative z-10 h-[80vh]">
+          <LeafletMap people_locations={people} />
+        </div>
       </div>
     </div>
   );
