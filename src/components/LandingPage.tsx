@@ -15,7 +15,7 @@ export default function LandingPage() {
       {/* <div className="absolute inset-0 bg-white/40"></div> */}
 
       {/* Main content */}
-      <div className="relative z-10 max-w-5xl mx-auto space-y-12">
+      <div className="relative z-10 max-w-5xl mx-auto space-y-12 bg-white/70 p-8 rounded-xl shadow-md">
         {/* Main Title */}
         <header className="text-center space-y-4">
           <h1 className="text-3xl md:text-4xl font-bold text-[#A29A69]">
