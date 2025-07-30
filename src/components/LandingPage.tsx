@@ -3,8 +3,19 @@ import React from "react";
 
 export default function LandingPage() {
   return (
-    <section className="bg-white text-black px-6 py-12 md:py-20 pt-25">
-      <div className="max-w-5xl mx-auto space-y-12">
+    <section className="relative bg-white text-black px-6 py-12 md:py-20 pt-25 overflow-hidden">
+      {/* Background Image with reduced opacity */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-20"
+        style={{ backgroundImage: "url('/hero-img.jpg')" }}
+        aria-hidden="true"
+      />
+
+      {/* Overlay to dim if needed */}
+      {/* <div className="absolute inset-0 bg-white/40"></div> */}
+
+      {/* Main content */}
+      <div className="relative z-10 max-w-5xl mx-auto space-y-12 bg-white/70 p-8 rounded-xl shadow-md">
         {/* Main Title */}
         <header className="text-center space-y-4">
           <h1 className="text-3xl md:text-4xl font-bold text-[#A29A69]">
