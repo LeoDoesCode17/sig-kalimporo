@@ -40,6 +40,7 @@ export default function LoginForm() {
       const user = await login(result.data.email, result.data.password);
       console.log("User logged in:", user);
       router.replace("/admin/dashboard");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setFormErrors({
         email:
