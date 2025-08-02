@@ -3,7 +3,7 @@ import React from "react";
 
 export default function LandingPage() {
   return (
-    <section className="relative bg-white text-black px-6 py-12 md:py-20 pt-25 overflow-hidden">
+    <section className="relative bg-white text-black px-6 py-12 pt-25 overflow-hidden">
       {/* Background Image with reduced opacity */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-20"
