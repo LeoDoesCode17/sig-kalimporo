@@ -18,30 +18,25 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative overflow-hidden min-h-screen">
-      {/* Background Image */}
+    <section className="relative bg-white text-black px-6 py-12 pt-25 overflow-hidden">
+      {/* Background Image with reduced opacity */}
       <div
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-20"
-        style={{
-          backgroundImage: "url('/hero-img.jpg')", // Replace with your image path
-        }}
+        className="absolute inset-0 bg-cover bg-center opacity-20"
+        style={{ backgroundImage: "url('/hero-img.jpg')" }}
+        aria-hidden="true"
       />
+      <header className="text-center space-y-4 mb-5">
+        <h1 className="text-3xl md:text-4xl font-bold text-[#A29A69]">
+          Peta Potensi Desa Kalimporo
+        </h1>
+        <h2 className="text-lg md:text-xl text-black">
+          Peta Interaktif Pertanian dan Peternakan Desa Kalimporo
+        </h2>
+      </header>
 
-      {/* Foreground Content */}
-      <div className="relative z-10 p-5 pt-25 px-6 text-black">
-        <header className="text-center space-y-4 mb-5">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#A29A69]">
-            Peta Potensi Desa Kalimporo
-          </h1>
-          <h2 className="text-lg md:text-xl text-black">
-            Peta Interaktif Pertanian dan Peternakan Desa Kalimporo
-          </h2>
-        </header>
-
-        <div className="relative z-10 h-[80vh]">
-          <LeafletMap people_locations={people} />
-        </div>
+      <div className="relative z-10 h-[80vh]">
+        <LeafletMap people_locations={people} />
       </div>
-    </div>
+    </section>
   );
 }
