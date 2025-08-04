@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import { HamletService } from "@/lib/firebase/firestore/hamlets-collection";
 import { OccupationService } from "@/lib/firebase/firestore/occupations-collection";
@@ -10,7 +10,7 @@ import { Occupation } from "@/types/Occupation";
 export default function CreatePeopleLocationModal({
   open,
   onClose,
-  onCreateSuccess
+  onCreateSuccess,
 }: CreatePeopleModalProps) {
   const [form, setForm] = useState({
     name: "",
@@ -18,7 +18,7 @@ export default function CreatePeopleLocationModal({
     work_as: "",
     hamlet: "",
     longitude: 0.0,
-    latitude: 0.0
+    latitude: 0.0,
   });
 
   const [hamlets, setHamlets] = useState<Hamlet[]>([]);
@@ -64,23 +64,34 @@ export default function CreatePeopleLocationModal({
       <div className="bg-white text-black rounded-lg w-full max-w-md p-6 border border-gray-300 shadow-lg">
         <h2 className="text-xl font-bold mb-4 text-[#A29A69]">Tambah Data</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+          <label htmlFor="name" className="block text-sm font-medium mb-1">
+            Nama
+          </label>
           <input
             name="name"
             value={form.name}
             onChange={handleChange}
-            placeholder="Nama"
+            placeholder="Masukkan nama petani/peternak/pelaku UMKM"
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
+          <label
+            htmlFor="contact_number"
+            className="block text-sm font-medium mb-1"
+          >
+            Nomot Telepon
+          </label>
           <input
             name="contact_number"
             value={form.contact_number}
             onChange={handleChange}
-            placeholder="Nomor Kontak"
+            placeholder="Masukkan nomor telepon petani/peternak/pelaku UMKM"
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
-
+          <label htmlFor="work_as" className="block text-sm font-medium mb-1">
+            Bekerja sebagai
+          </label>
           <select
             name="work_as"
             value={form.work_as}
@@ -98,6 +109,9 @@ export default function CreatePeopleLocationModal({
             ))}
           </select>
 
+          <label htmlFor="hamlet" className="block text-sm font-medium mb-1">
+            Dusun
+          </label>
           <select
             name="hamlet"
             value={form.hamlet}
@@ -114,7 +128,9 @@ export default function CreatePeopleLocationModal({
               </option>
             ))}
           </select>
-
+          <label htmlFor="longitude" className="block text-sm font-medium mb-1">
+            Longitude (contoh: 119.586127)
+          </label>
           <input
             name="longitude"
             type="number"
@@ -124,6 +140,9 @@ export default function CreatePeopleLocationModal({
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
+          <label htmlFor="latitude" className="block text-sm font-medium mb-1">
+            Latitude (contoh: -5.570137)
+          </label>
           <input
             name="latitude"
             type="number"
