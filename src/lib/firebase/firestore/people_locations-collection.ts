@@ -37,6 +37,7 @@ export const PeopleLocationService = {
         work_as: occupation?.name ?? "Tidak diketahui",
         hamlet: hamlet?.name ?? "Tidak diketahui",
         soft_deleted: data.soft_deleted ?? false,
+        description: data.description ?? "Belum ada deskripsi"
       };
     });
     return Promise.all(peoplePromises);
@@ -71,7 +72,8 @@ export const PeopleLocationService = {
     occupation_id: string,
     hamlet_id: string,
     longitude: number,
-    latitude: number
+    latitude: number,
+    description: string,
   ): Promise<void> {
     const occupationRef = doc(firestore, "occupations", occupation_id);
     const hamletRef = doc(firestore, "hamlets", hamlet_id);
@@ -84,6 +86,7 @@ export const PeopleLocationService = {
       hamlet: hamletRef,
       location,
       soft_deleted: false,
+      description: description
     });
   },
   async update(
@@ -93,7 +96,8 @@ export const PeopleLocationService = {
     occupation_id: string,
     hamlet_id: string,
     longitude: number,
-    latitude: number
+    latitude: number,
+    description: string
   ): Promise<void> {
     const personRef = doc(firestore, "people_locations", id);
     const occupationRef = doc(firestore, "occupations", occupation_id);
@@ -106,6 +110,7 @@ export const PeopleLocationService = {
       work_as: occupationRef,
       hamlet: hamletRef,
       location,
+      description: description
     });
   },
 };

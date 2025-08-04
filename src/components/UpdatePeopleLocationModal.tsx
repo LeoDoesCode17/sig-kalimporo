@@ -21,6 +21,7 @@ export default function UpdatePeopleLocationModal({
     hamlet: "",
     longitude: 0.0,
     latitude: 0.0,
+    description: "",
   });
 
   const [hamlets, setHamlets] = useState<Hamlet[]>([]);
@@ -38,6 +39,7 @@ export default function UpdatePeopleLocationModal({
         hamlet: "",
         longitude: person.location.longitude || 0.0,
         latitude: person.location.latitude || 0.0,
+        description: person.description || "",
       });
     }
   }, [person]);
@@ -45,6 +47,10 @@ export default function UpdatePeopleLocationModal({
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -60,8 +66,9 @@ export default function UpdatePeopleLocationModal({
         form.work_as,
         form.hamlet,
         form.longitude,
-        form.latitude
-      )
+        form.latitude,
+        form.description
+      );
       if (onUpdateSuccess) onUpdateSuccess();
       onClose();
     } catch (error) {
@@ -80,6 +87,9 @@ export default function UpdatePeopleLocationModal({
           Edit Data - {person.name}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+          <label htmlFor="name" className="block text-sm font-medium mb-1">
+            Nama
+          </label>
           <input
             name="name"
             value={form.name}
@@ -88,6 +98,12 @@ export default function UpdatePeopleLocationModal({
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
+          <label
+            htmlFor="contact_number"
+            className="block text-sm font-medium mb-1"
+          >
+            Nomor Teleponm (dalam +62)
+          </label>
           <input
             name="contact_number"
             value={form.contact_number}
@@ -96,7 +112,9 @@ export default function UpdatePeopleLocationModal({
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
-
+          <label htmlFor="work_as" className="block text-sm font-medium mb-1">
+            Bekerja Sebagai
+          </label>
           <select
             name="work_as"
             value={form.work_as}
@@ -113,7 +131,9 @@ export default function UpdatePeopleLocationModal({
               </option>
             ))}
           </select>
-
+          <label htmlFor="hamlet" className="block text-sm font-medium mb-1">
+            Dusun
+          </label>
           <select
             name="hamlet"
             value={form.hamlet}
@@ -130,7 +150,9 @@ export default function UpdatePeopleLocationModal({
               </option>
             ))}
           </select>
-
+          <label htmlFor="longitude" className="block text-sm font-medium mb-1">
+            Koordinat Longitude (contoh: 119.586127)
+          </label>
           <input
             name="longitude"
             type="number"
@@ -140,6 +162,9 @@ export default function UpdatePeopleLocationModal({
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
+          <label htmlFor="latitude" className="block text-sm font-medium mb-1">
+            Koordinat Latitude (contoh: -5.570137)
+          </label>
           <input
             name="latitude"
             type="number"
@@ -147,6 +172,20 @@ export default function UpdatePeopleLocationModal({
             onChange={handleChange}
             placeholder="Latitude"
             className="w-full border border-gray-300 rounded px-3 py-2"
+            required
+          />
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium mb-1"
+          >
+            Deskripsi
+          </label>
+          <textarea
+            name="description"
+            value={form.description}
+            onChange={handleChangeTextArea}
+            placeholder="Masukkan deskripsi petani/peternak/pelaku UMKM"
+            className="w-full border border-gray-300 rounded px-3 py-2 resize-y min-h-[100px]"
             required
           />
 

@@ -8,4 +8,5 @@ export interface PeopleLocation {
   work_as: string;
   hamlet: string;
   soft_deleted: boolean;
+  description: string;
 }
