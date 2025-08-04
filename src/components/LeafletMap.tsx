@@ -9,7 +9,6 @@ import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { LeafletMapProps } from "@/types/LeafletMapProps";
 import Badge from "./Badge";
-import Link from "next/link";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
