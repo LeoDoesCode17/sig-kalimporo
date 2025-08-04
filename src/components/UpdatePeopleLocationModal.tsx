@@ -95,7 +95,7 @@ export default function UpdatePeopleLocationModal({
             htmlFor="contact_number"
             className="block text-sm font-medium mb-1"
           >
-            Nomor Telepon
+            Nomor Teleponm (dalam +62)
           </label>
           <input
             name="contact_number"

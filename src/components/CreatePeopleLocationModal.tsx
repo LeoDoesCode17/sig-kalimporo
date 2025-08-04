@@ -79,7 +79,7 @@ export default function CreatePeopleLocationModal({
             htmlFor="contact_number"
             className="block text-sm font-medium mb-1"
           >
-            Nomor Telepon
+            Nomor Telepon (dalam +62)
           </label>
           <input
             name="contact_number"
