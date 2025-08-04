@@ -53,7 +53,8 @@ export default function CreatePeopleLocationModal({
         form.work_as,
         form.hamlet,
         form.longitude,
-        form.latitude
+        form.latitude,
+        form.description
       );
       if (onCreateSuccess) onCreateSuccess();
       onClose();

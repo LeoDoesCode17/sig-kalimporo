@@ -66,7 +66,8 @@ export default function UpdatePeopleLocationModal({
         form.work_as,
         form.hamlet,
         form.longitude,
-        form.latitude
+        form.latitude,
+        form.description
       );
       if (onUpdateSuccess) onUpdateSuccess();
       onClose();
