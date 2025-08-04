@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "SIG Kalimporo",
   description: "Sistem Informasi Geografis Kalimporo",
+  icons: {
+    icon: "/favicon.ico", // ← points to /public/favicon.ico
+  },
 };
 
 export default function RootLayout({
