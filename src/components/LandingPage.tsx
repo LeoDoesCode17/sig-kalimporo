@@ -85,11 +85,11 @@ export default function LandingPage() {
               pada setiap titik di peta untuk melihat detail seperti nama, jenis
               komoditas, alamat, dan kontak yang bisa dihubungi.
             </li>
-            <li>
+            {/* <li>
               <strong className="text-black">Pencarian Mudah:</strong> Gunakan
               fitur filter untuk menemukan potensi berdasarkan dusun atau jenis
               usaha (pertanian, peternakan, UMKM).
-            </li>
+            </li> */}
           </ul>
         </section>
       </div>

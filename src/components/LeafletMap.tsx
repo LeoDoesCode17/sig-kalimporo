@@ -10,6 +10,7 @@ import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { LeafletMapProps } from "@/types/LeafletMapProps";
 import Badge from "./Badge";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -19,7 +20,7 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function LeafletMap({ people_locations }: LeafletMapProps) {
-  const location = [-5.574667089244676, 119.58706112819605];
+  const location: [number, number] = [-5.574667089244676, 119.58706112819605];
 
   return (
     <MapContainer
