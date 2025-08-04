@@ -37,6 +37,7 @@ export const PeopleLocationService = {
         work_as: occupation?.name ?? "Tidak diketahui",
         hamlet: hamlet?.name ?? "Tidak diketahui",
         soft_deleted: data.soft_deleted ?? false,
+        description: data.description ?? "Belum ada deskripsi"
       };
     });
     return Promise.all(peoplePromises);
