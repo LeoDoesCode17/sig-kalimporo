@@ -19,6 +19,7 @@ export default function CreatePeopleLocationModal({
     hamlet: "",
     longitude: 0.0,
     latitude: 0.0,
+    description: "",
   });
 
   const [hamlets, setHamlets] = useState<Hamlet[]>([]);
@@ -34,6 +35,12 @@ export default function CreatePeopleLocationModal({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleChangeTextArea = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setForm({...form, [e.target.name]: e.target.value});
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -152,7 +159,20 @@ export default function CreatePeopleLocationModal({
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
-
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium mb-1"
+          >
+            Deskripsi
+          </label>
+          <textarea
+            name="description"
+            value={form.description}
+            onChange={handleChangeTextArea}
+            placeholder="Masukkan deskripsi petani/peternak/pelaku UMKM"
+            className="w-full border border-gray-300 rounded px-3 py-2 resize-y min-h-[100px]"
+            required
+          />
           <div className="flex justify-end gap-2 pt-4">
             <button
               type="button"
