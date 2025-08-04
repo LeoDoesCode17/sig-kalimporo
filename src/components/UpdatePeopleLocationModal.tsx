@@ -61,7 +61,7 @@ export default function UpdatePeopleLocationModal({
         form.hamlet,
         form.longitude,
         form.latitude
-      )
+      );
       if (onUpdateSuccess) onUpdateSuccess();
       onClose();
     } catch (error) {
@@ -80,6 +80,9 @@ export default function UpdatePeopleLocationModal({
           Edit Data - {person.name}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+          <label htmlFor="name" className="block text-sm font-medium mb-1">
+            Nama
+          </label>
           <input
             name="name"
             value={form.name}
@@ -88,6 +91,12 @@ export default function UpdatePeopleLocationModal({
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
+          <label
+            htmlFor="contact_number"
+            className="block text-sm font-medium mb-1"
+          >
+            Nomor Telepon
+          </label>
           <input
             name="contact_number"
             value={form.contact_number}
@@ -96,7 +105,9 @@ export default function UpdatePeopleLocationModal({
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
-
+          <label htmlFor="work_as" className="block text-sm font-medium mb-1">
+            Bekerja Sebagai
+          </label>
           <select
             name="work_as"
             value={form.work_as}
@@ -113,7 +124,9 @@ export default function UpdatePeopleLocationModal({
               </option>
             ))}
           </select>
-
+          <label htmlFor="hamlet" className="block text-sm font-medium mb-1">
+            Dusun
+          </label>
           <select
             name="hamlet"
             value={form.hamlet}
@@ -130,7 +143,9 @@ export default function UpdatePeopleLocationModal({
               </option>
             ))}
           </select>
-
+          <label htmlFor="longitude" className="block text-sm font-medium mb-1">
+            Koordinat Longitude (contoh: 119.586127)
+          </label>
           <input
             name="longitude"
             type="number"
@@ -140,6 +155,9 @@ export default function UpdatePeopleLocationModal({
             className="w-full border border-gray-300 rounded px-3 py-2"
             required
           />
+          <label htmlFor="latitude" className="block text-sm font-medium mb-1">
+            Koordinat Latitude (contoh: -5.570137)
+          </label>
           <input
             name="latitude"
             type="number"
