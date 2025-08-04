@@ -64,10 +64,24 @@ export default function LeafletMap({ people_locations }: LeafletMapProps) {
                   <span className="text-gray-900">{person.hamlet}</span>
                 </div>
               </div>
+
+              {/* Description */}
+              {person.description && (
+                <p className="text-xs text-gray-700 mt-2">
+                  {person.description}
+                </p>
+              )}
+
+              {/* WhatsApp Button */}
               <div className="pt-2">
-                <button className="text-blue-600 hover:underline text-xs font-medium">
-                  Lihat detail
-                </button>
+                <a
+                  href={`https://wa.me/${person.contact_number}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-green-500 hover:bg-green-600 !text-white text-xs font-semibold px-4 py-2 rounded"
+                >
+                  Hubungi melalui WhatsApp
+                </a>
               </div>
             </div>
           </Popup>
