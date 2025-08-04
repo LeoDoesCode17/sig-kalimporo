@@ -79,7 +79,7 @@ export default function CreatePeopleLocationModal({
             htmlFor="contact_number"
             className="block text-sm font-medium mb-1"
           >
-            Nomot Telepon
+            Nomor Telepon
           </label>
           <input
             name="contact_number"
@@ -90,7 +90,7 @@ export default function CreatePeopleLocationModal({
             required
           />
           <label htmlFor="work_as" className="block text-sm font-medium mb-1">
-            Bekerja sebagai
+            Bekerja Sebagai
           </label>
           <select
             name="work_as"
@@ -129,7 +129,7 @@ export default function CreatePeopleLocationModal({
             ))}
           </select>
           <label htmlFor="longitude" className="block text-sm font-medium mb-1">
-            Longitude (contoh: 119.586127)
+            Koordinat Longitude (contoh: 119.586127)
           </label>
           <input
             name="longitude"
@@ -141,7 +141,7 @@ export default function CreatePeopleLocationModal({
             required
           />
           <label htmlFor="latitude" className="block text-sm font-medium mb-1">
-            Latitude (contoh: -5.570137)
+            Koordinat Latitude (contoh: -5.570137)
           </label>
           <input
             name="latitude"
